@@ -23,9 +23,11 @@ class Pain_au_chocolat(Pastry):
         super().__init__('pain au chocolat', 3)
 
 class Topping(Pastry):
-    def __init__(self,pastry):
+    def __init__(self,pastry,price,topping):
         self.pastry = pastry
         self.pastry_name = None
+        self.pricing = price
+        self.topping = topping
 
     def name(self):
         base = self.pastry.name()
@@ -39,18 +41,12 @@ class Topping(Pastry):
 
 class Chocolate(Topping):
     def __init__(self,pastry):
-        super().__init__(pastry)
-        self.pricing = 0.1
-        self.topping = 'chocolate'
+        super().__init__(pastry, 0.1,'chocolate')
 
 class Nuts(Topping):
     def __init__(self,pastry):
-        super().__init__(pastry)
-        self.pricing = 0.2
-        self.topping = 'nuts'
+        super().__init__(pastry, 0.2,'nuts')
 
 class Sugar(Topping):
     def __init__(self,pastry):
-        super().__init__(pastry)
-        self.pricing = 0.3
-        self.topping = 'sugar'
+        super().__init__(pastry, 0.3,'sugar')
