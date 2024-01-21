@@ -1,33 +1,33 @@
-class Cupcake:
-    # def __init__(self):
-    #     pass
+class Pastry:
     def name(self):
-        return 'cupcake'
+        return self.pastry_name
 
     def price(self):
-        return 1
+        return self.pastry_price
 
-class Cookie:
-    def name(self):
-        return 'cookie'
+class Cupcake(Pastry):
+    def __init__(self):
+        self.pastry_name = 'cupcake'
+        self.pastry_price = 1
 
-    def price(self):
-        return 2
+class Cookie(Pastry):
+    def __init__(self):
+        self.pastry_name = 'cookie'
+        self.pastry_price = 2
 
-class Pain_au_chocolat:
-    def name(self):
-        return 'pain au chocolat'
+class Pain_au_chocolat(Pastry):
+    def __init__(self):
+        self.pastry_name = 'pain au chocolat'
+        self.pastry_price = 3
 
-    def price(self):
-        return 3
-
-class Topping:
+class Topping(Pastry):
     def __init__(self,pastry):
         self.pastry = pastry
+        self.pastry_name = None
 
     def name(self):
         base = self.pastry.name()
-        if 'with' in base:
+        if self.pastry.pastry_name is None:
             return base + ' and ' + self.topping
         else:
             return base + ' with ' + self.topping
