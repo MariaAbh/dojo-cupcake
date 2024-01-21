@@ -1,5 +1,7 @@
 import cupcake as cc
 
+# SIMPLES
+
 def test_return_cupcake():
     cake = cc.Cupcake()
     assert(cake.name() == "cupcake")
@@ -10,18 +12,50 @@ def test_return_tough_cookie():
     assert(tough_cookie.name() == "cookie")
     assert(tough_cookie.price() == 2)
 
+def test_return_pain_au_chocolat():
+    poc = cc.Pain_au_chocolat()
+    assert(poc.name() == "pain au chocolat")
+    assert(poc.price() == 3)
+
+
+
+
+# Chocolate
 def test_chocolate():
     cake = cc.Chocolate(cc.Cupcake())
     cookie = cc.Chocolate(cc.Cookie())
-    assert(cake.name() == "cupcake with chocolate")
-    assert(cake.price() == 1.1)
-    assert(cookie.name() == "cookie with chocolate")
+    poc_au_chocolat = cc.Chocolate(cc.Pain_au_chocolat())
+    for pastry, name, price in [
+        (cake, 'cupcake', 1.1),
+        (cookie, 'cookie', 2.1),
+        (poc_au_chocolat, 'pain au chocolat', 3.1),
+    ]:
+        assert(pastry.name() == f"{name} with chocolate")
+        assert(pastry.price() == price)
 
 def test_nuts():
     cake = cc.Nuts(cc.Cupcake())
     cookie = cc.Nuts(cc.Cookie())
-    assert(cake.name() == "cupcake with nuts")
-    assert(cookie.name() == "cookie with nuts")
+    poc = cc.Nuts(cc.Pain_au_chocolat())
+    for pastry, name, price in [
+        (cake, 'cupcake', 1.2),
+        (cookie, 'cookie', 2.2),
+        (poc, 'pain au chocolat', 3.2),
+    ]:
+        assert(pastry.name() == f"{name} with nuts")
+        assert(pastry.price() == price)
+
+def test_sugar():
+    cake = cc.Sugar(cc.Cupcake())
+    cookie = cc.Sugar(cc.Cookie())
+    poc = cc.Sugar(cc.Pain_au_chocolat())
+    for pastry, name, price in [
+        (cake, 'cupcake', 1.3),
+        (cookie, 'cookie', 2.3),
+        (poc, 'pain au chocolat', 3.3),
+    ]:
+        assert(pastry.name() == f"{name} with sugar")
+        assert(pastry.price() == price)
 
 def test_chocolate_nuts():
     cake = cc.Nuts(cc.Chocolate(cc.Cupcake()))
