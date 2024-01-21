@@ -1,26 +1,28 @@
 import cupcake as cc
 
+def assert_float_equal(a, b):
+    err = (.2 + .1) - .3
+    assert(abs(a-b) < 10*err)
+
 # SIMPLES
 
 def test_return_cupcake():
     cake = cc.Cupcake()
     assert(cake.name() == "cupcake")
-    assert(cake.price() == 1)
+    assert_float_equal(cake.price(), 1)
 
 def test_return_tough_cookie():
     tough_cookie = cc.Cookie()
     assert(tough_cookie.name() == "cookie")
-    assert(tough_cookie.price() == 2)
+    assert_float_equal(tough_cookie.price(), 2)
 
 def test_return_pain_au_chocolat():
     poc = cc.Pain_au_chocolat()
     assert(poc.name() == "pain au chocolat")
-    assert(poc.price() == 3)
+    assert_float_equal(poc.price(), 3)
 
 
-
-
-# Chocolate
+# Single Topping
 def test_chocolate():
     cake = cc.Chocolate(cc.Cupcake())
     cookie = cc.Chocolate(cc.Cookie())
@@ -31,7 +33,7 @@ def test_chocolate():
         (poc_au_chocolat, 'pain au chocolat', 3.1),
     ]:
         assert(pastry.name() == f"{name} with chocolate")
-        assert(pastry.price() == price)
+        assert_float_equal(pastry.price(), price)
 
 def test_nuts():
     cake = cc.Nuts(cc.Cupcake())
@@ -43,7 +45,7 @@ def test_nuts():
         (poc, 'pain au chocolat', 3.2),
     ]:
         assert(pastry.name() == f"{name} with nuts")
-        assert(pastry.price() == price)
+        assert_float_equal(pastry.price(), price)
 
 def test_sugar():
     cake = cc.Sugar(cc.Cupcake())
@@ -55,26 +57,81 @@ def test_sugar():
         (poc, 'pain au chocolat', 3.3),
     ]:
         assert(pastry.name() == f"{name} with sugar")
-        assert(pastry.price() == price)
+        assert_float_equal(pastry.price(), price)
 
+# two toppings
 def test_chocolate_nuts():
-    cake = cc.Nuts(cc.Chocolate(cc.Cupcake()))
-    cookie = cc.Nuts(cc.Chocolate(cc.Cookie()))
-    assert(cake.name() == "cupcake with chocolate and nuts")
-    assert(cookie.name() == "cookie with chocolate and nuts")
+    for pastry_cls, name, price in [
+        (cc.Cupcake, 'cupcake', 1.3),
+        (cc.Cookie, 'cookie', 2.3),
+        (cc.Pain_au_chocolat, 'pain au chocolat', 3.3),
+    ]:
+        pastry = cc.Nuts(cc.Chocolate(pastry_cls()))
+        assert(pastry.name() == f"{name} with chocolate and nuts")
+        assert_float_equal(pastry.price(), price)
 
+        pastry = cc.Chocolate(cc.Nuts(pastry_cls()))
+        assert(pastry.name() == f"{name} with nuts and chocolate")
+        assert_float_equal(pastry.price(), price)
 
-def test_nuts_chocolate():
-    cake = cc.Chocolate(cc.Nuts(cc.Cupcake()))
-    cookie = cc.Chocolate(cc.Nuts(cc.Cookie()))
-    assert(cake.name() == "cupcake with nuts and chocolate")
-    assert(cookie.name() == "cookie with nuts and chocolate")
+def test_chocolate_sugar():
+    for pastry_cls, name, price in [
+        (cc.Cupcake, 'cupcake', 1.4),
+        (cc.Cookie, 'cookie', 2.4),
+        (cc.Pain_au_chocolat, 'pain au chocolat', 3.4),
+    ]:
+        pastry = cc.Sugar(cc.Chocolate(pastry_cls()))
+        assert(pastry.name() == f"{name} with chocolate and sugar")
+        assert_float_equal(pastry.price(), price)
 
-def test_sugar():
-    cake = cc.Sugar(cc.Cupcake())
-    cookie = cc.Sugar(cc.Cookie())
-    assert(cake.name() == "cupcake with sugar")
-    assert(cookie.name() == "cookie with sugar")
+        pastry = cc.Chocolate(cc.Sugar(pastry_cls()))
+        assert(pastry.name() == f"{name} with sugar and chocolate")
+        assert_float_equal(pastry.price(), price)
+
+def test_nuts_sugar():
+    for pastry_cls, name, price in [
+        (cc.Cupcake, 'cupcake', 1.5),
+        (cc.Cookie, 'cookie', 2.5),
+        (cc.Pain_au_chocolat, 'pain au chocolat', 3.5),
+    ]:
+        pastry = cc.Sugar(cc.Nuts(pastry_cls()))
+        assert(pastry.name() == f"{name} with nuts and sugar")
+        assert_float_equal(pastry.price(), price)
+
+        pastry = cc.Nuts(cc.Sugar(pastry_cls()))
+        assert(pastry.name() == f"{name} with sugar and nuts")
+        assert_float_equal(pastry.price(), price)
+
+# three toppings
+def test_chocolate_nuts_sugar():
+    for pastry_cls, name, price in [
+        (cc.Cupcake, 'cupcake', 1.6),
+        (cc.Cookie, 'cookie', 2.6),
+        (cc.Pain_au_chocolat, 'pain au chocolat', 3.6),
+    ]:
+        pastry = cc.Chocolate(cc.Sugar(cc.Nuts(pastry_cls())))
+        assert(pastry.name() == f"{name} with nuts and sugar and chocolate")
+        assert_float_equal(pastry.price(), price)
+
+        pastry = cc.Chocolate(cc.Nuts(cc.Sugar(pastry_cls())))
+        assert(pastry.name() == f"{name} with sugar and nuts and chocolate")
+        assert_float_equal(pastry.price(), price)
+
+        pastry = cc.Nuts(cc.Sugar(cc.Chocolate(pastry_cls())))
+        assert(pastry.name() == f"{name} with chocolate and sugar and nuts")
+        assert_float_equal(pastry.price(), price)
+
+        pastry = cc.Nuts(cc.Chocolate(cc.Sugar(pastry_cls())))
+        assert(pastry.name() == f"{name} with sugar and chocolate and nuts")
+        assert_float_equal(pastry.price(), price)
+
+        pastry = cc.Sugar(cc.Nuts(cc.Chocolate(pastry_cls())))
+        assert(pastry.name() == f"{name} with chocolate and nuts and sugar")
+        assert_float_equal(pastry.price(), price)
+
+        pastry = cc.Sugar(cc.Chocolate(cc.Nuts(pastry_cls())))
+        assert(pastry.name() == f"{name} with nuts and chocolate and sugar")
+        assert_float_equal(pastry.price(), price)
 
 def test_pain_au_chocolat_nuts_sugar():
     poc = cc.Nuts(cc.Sugar(cc.Pain_au_chocolat()))
