@@ -1,24 +1,26 @@
 class Pastry:
+    def __init__(self, name, price):
+        self.pastry_name = name
+        self.pastry_price = price
+
     def name(self):
         return self.pastry_name
 
     def price(self):
         return self.pastry_price
 
+
 class Cupcake(Pastry):
     def __init__(self):
-        self.pastry_name = 'cupcake'
-        self.pastry_price = 1
+        super().__init__('cupcake', 1)
 
 class Cookie(Pastry):
     def __init__(self):
-        self.pastry_name = 'cookie'
-        self.pastry_price = 2
+        super().__init__('cookie', 2)
 
 class Pain_au_chocolat(Pastry):
     def __init__(self):
-        self.pastry_name = 'pain au chocolat'
-        self.pastry_price = 3
+        super().__init__('pain au chocolat', 3)
 
 class Topping(Pastry):
     def __init__(self,pastry):
