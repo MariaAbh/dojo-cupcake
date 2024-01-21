@@ -18,6 +18,9 @@ class Pain_au_chocolat:
     def name(self):
         return 'pain au chocolat'
 
+    def price(self):
+        return 3
+
 class Topping:
     def __init__(self,pastry):
         self.pastry = pastry
