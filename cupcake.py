@@ -30,11 +30,8 @@ class Topping(Pastry):
         self.topping = topping
 
     def name(self):
-        base = self.pastry.name()
-        if self.pastry.pastry_name is None:
-            return base + ' and ' + self.topping
-        else:
-            return base + ' with ' + self.topping
+        conjunction = 'and' if self.pastry.pastry_name is None else 'with'
+        return f'{self.pastry.name()} {conjunction} {self.topping}'
 
     def price(self):
         return self.pastry.price() + self.pricing
